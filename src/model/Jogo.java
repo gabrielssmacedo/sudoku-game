@@ -17,15 +17,34 @@ public class Jogo extends Tabuleiro{
 
     }
 
-    public boolean[][] posicoesDisponiveis() {
-        boolean[][] positionsDisponiveis = new boolean[TAMANHO][TAMANHO];
+    public boolean[][] getPosicoesVazias() {
+        boolean[][] posicoesVazias = new boolean[TAMANHO][TAMANHO];
 
         for(int i = 0; i < getPositions().length; i++) {
             for(int j = 0; j < getPositions().length; j++) {
-                positionsDisponiveis[i][j] = getPositions()[i][j] == null;
+                posicoesVazias[i][j] = getPositions()[i][j] == null;
             }
         }
 
-        return positionsDisponiveis;
+        return posicoesVazias;
     }
+
+    public void colocarNumero(int linha, int coluna, int numero) {
+        if(verificaPosicaoExistente(linha, coluna)) return;
+        getPositions()[linha][coluna] = numero;
+    }
+
+    public void retirarNumero(int linha, int coluna) {
+        if(verificaPosicaoExistente(linha, coluna)) return;
+        getPositions()[linha][coluna] = null;
+    }
+
+    private boolean verificaPosicaoExistente(int linha, int coluna) {
+        if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
+            System.out.println("Posição inválida!");
+            return false;
+        }
+        return true;
+    }
+
 }
