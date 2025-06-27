@@ -30,18 +30,27 @@ public class Jogo extends Tabuleiro{
     }
 
     public void colocarNumero(int linha, int coluna, int numero) {
-        if(verificaPosicaoExistente(linha, coluna)) return;
+        if(ehPosicaoValida(linha, coluna)) return;
+        if(ehNumeroValido(numero)) return;
         getPositions()[linha][coluna] = numero;
     }
 
     public void retirarNumero(int linha, int coluna) {
-        if(verificaPosicaoExistente(linha, coluna)) return;
+        if(ehPosicaoValida(linha, coluna)) return;
         getPositions()[linha][coluna] = null;
     }
 
-    private boolean verificaPosicaoExistente(int linha, int coluna) {
+    private boolean ehPosicaoValida(int linha, int coluna) {
         if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
             System.out.println("Posição inválida!");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean ehNumeroValido(int numero) {
+        if(numero >= 0 && numero <= 9) {
+            System.out.println("Número inválido!");
             return false;
         }
         return true;

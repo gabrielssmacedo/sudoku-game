@@ -10,6 +10,8 @@ public class Main {
         UI.start();
 
         Jogo sudoku = new Jogo(args);
+        sudoku.retirarNumero(0,0);
+        sudoku.colocarNumero(0, 0, 9);
         UI.mostrarJogo(sudoku);
 
         for(int i = 0; i < 9; i++) {
