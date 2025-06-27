@@ -1,4 +1,6 @@
 package model;
 
-public class Jogo {
+public class Jogo extends Tabuleiro{
+
+
 }

@@ -2,16 +2,39 @@ package model;
 
 public abstract class Tabuleiro {
 
-    Integer[][] positions;
-    Integer[][] numerosFixos;
+    protected static final int TAMANHO = 9;
 
+    protected Integer[][] positions;
+    protected Integer[][] numerosFixos;
 
     public Tabuleiro() {
-        positions = new Integer[9][9];
+        positions = new Integer[TAMANHO][TAMANHO];
+    }
+
+    public Integer[] getLinha(int linha) {
+        return positions[linha];
+    }
+
+    public Integer[] getColuna(int coluna) {
+        Integer[] numeros = new Integer[TAMANHO];
+
+        for(int linha = 0; linha < TAMANHO; linha++) {
+            numeros[linha] = positions[linha][coluna];
+        }
+
+        return numeros;
+    }
+
+    public int getTamanho() {
+        return TAMANHO;
+    }
+
+    public Integer[][] getPositions() {
+        return positions;
     }
 
     public void inserirNumeroFixos(String[] fixos) {
-       numerosFixos = new Integer[9][9];
+       numerosFixos = new Integer[TAMANHO][TAMANHO];
     }
 
 
