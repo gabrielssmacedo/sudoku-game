@@ -27,13 +27,17 @@ public class UI {
         for(int i = 0; i < jogoAtual.getTamanho(); i++) {
             for(int j = 0; j < jogoAtual.getTamanho(); j++) {
                 String charPrint = "-  ";
-
+                String num = String.format("%d  ", jogo[i][j]);
                 if(separador > 2 || j == 0) {
                     System.out.print("|");
                     separador = 0;
                 }
-                if(separador == 2) charPrint = "-";
-                System.out.print(jogo[i][j] == null ? charPrint : jogo[i][j]);
+                if(separador == 2) {
+                    charPrint = "-";
+                    num = String.format("%d", jogo[i][j]);
+
+                }
+                System.out.print(jogo[i][j] == null ? charPrint : num);
                 separador++;
             }
             System.out.println("|");

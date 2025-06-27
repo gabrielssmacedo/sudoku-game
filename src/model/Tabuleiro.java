@@ -1,14 +1,18 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Tabuleiro {
 
     protected static final int TAMANHO = 9;
 
     protected Integer[][] positions;
-    protected Integer[][] numerosFixos;
+    protected List<Integer[]> numerosFixos;
 
     public Tabuleiro() {
         positions = new Integer[TAMANHO][TAMANHO];
+        numerosFixos = new ArrayList<>();
     }
 
     public Integer[] getLinha(int linha) {
@@ -33,9 +37,6 @@ public abstract class Tabuleiro {
         return positions;
     }
 
-    public void inserirNumeroFixos(String[] fixos) {
-       numerosFixos = new Integer[TAMANHO][TAMANHO];
-    }
 
 
 }
