@@ -1,6 +1,7 @@
 package utils;
 
 import model.Jogo;
+import model.enums.StatusJogo;
 
 import java.util.Arrays;
 
@@ -21,4 +22,9 @@ public class ValidadorJogo {
 
         return true;
     }
+
+    public boolean jogoFoiIniciado(Jogo jogo) {
+        return !jogo.getStatusJogo().equals(StatusJogo.NAO_INICIADO);
+    }
+
 }

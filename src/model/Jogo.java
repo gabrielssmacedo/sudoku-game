@@ -1,8 +1,14 @@
 package model;
 
+import model.enums.StatusJogo;
+import utils.ValidadorJogo;
+
 import java.util.List;
 
 public class Jogo extends Tabuleiro{
+
+    private StatusJogo statusJogo;
+    private boolean statusErro;
 
     public Jogo(String[] args) {
         super();
@@ -17,7 +23,23 @@ public class Jogo extends Tabuleiro{
             indexes[2] = numero;
             numerosFixos.add(indexes);
         }
+        this.statusJogo = StatusJogo.NAO_INICIADO;
+    }
 
+    public StatusJogo getStatusJogo() {
+        return statusJogo;
+    }
+
+    public void setStatusJogo(StatusJogo statusJogo) {
+        this.statusJogo = statusJogo;
+    }
+
+    public boolean isStatusErro() {
+        return statusErro;
+    }
+
+    public void setStatusErro(boolean statusErro) {
+        this.statusErro = statusErro;
     }
 
     public boolean[][] getPosicoesVazias() {
@@ -75,6 +97,22 @@ public class Jogo extends Tabuleiro{
             positions[linha][coluna] = numeroFixo;
         }
 
+    }
+
+    public boolean finalizarJogo() {
+        ValidadorJogo validador = new ValidadorJogo();
+        int len = getPositions().length;
+        if(!getStatusJogo().equals(StatusJogo.COMPLETO)) return false;
+        if(isStatusErro()) return false;
+
+        for(int i = 0; i < len; i++) {
+            for(int j = 0; j < len; j++) {
+                if(!validador.validarNumeroNaPosicao(i, j, getPositions()))
+                    return false;
+            }
+        }
+
+        return true;
     }
 
     private boolean ehPosicaoValida(int linha, int coluna) {
