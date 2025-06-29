@@ -28,5 +28,7 @@ public class Main {
 
         System.out.println(validador.validarNumeroNaPosicao(3, 8, sudoku.getPositions()));
 
+        sudoku.limparTabuleiro();
+        UI.mostrarJogo(sudoku);
     }
 }

@@ -11,9 +11,10 @@ public class Jogo extends Tabuleiro{
             int coluna = Integer.parseInt(String.valueOf(a.charAt(0)));
             int numero = Integer.parseInt(String.valueOf(a.charAt(4)));
             positions[linha][coluna] = numero;
-            Integer[] indexes = new Integer[2];
+            Integer[] indexes = new Integer[3];
             indexes[0] = linha;
             indexes[1] = coluna;
+            indexes[2] = numero;
             numerosFixos.add(indexes);
         }
 
@@ -57,6 +58,25 @@ public class Jogo extends Tabuleiro{
         getPositions()[linha][coluna] = null;
     }
 
+    public void limparTabuleiro(){
+        int len = getPositions().length;
+
+        Integer[][] positions = getPositions();
+        for(int i = 0; i < len; i++) {
+            for(int j = 0; j < len; j++) {
+                positions[i][j] = null;
+            }
+        }
+
+        for(Integer[] i : getNumerosFixos()) {
+            int linha = i[0];
+            int coluna = i[1];
+            int numeroFixo = i[2];
+            positions[linha][coluna] = numeroFixo;
+        }
+
+    }
+
     private boolean ehPosicaoValida(int linha, int coluna) {
         if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
             System.out.println("Posição inválida!");
@@ -80,5 +100,6 @@ public class Jogo extends Tabuleiro{
         }
         return false;
     }
+
 
 }
