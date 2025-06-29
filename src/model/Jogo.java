@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Jogo extends Tabuleiro{
 
     public Jogo(String[] args) {
@@ -30,26 +32,38 @@ public class Jogo extends Tabuleiro{
     }
 
     public void colocarNumero(int linha, int coluna, int numero) {
-        if(ehPosicaoValida(linha, coluna)) return;
-        if(ehNumeroValido(numero)) return;
+        if(!ehPosicaoValida(linha, coluna)) return;
+        if(!ehNumeroValido(numero)) return;
+        boolean[][] posicoesDisponiveis = getPosicoesVazias();
+        if(!posicoesDisponiveis[linha][coluna]) {
+            System.out.println("Posição já ocupada!");
+            return;
+        }
         getPositions()[linha][coluna] = numero;
     }
 
     public void retirarNumero(int linha, int coluna) {
-        if(ehPosicaoValida(linha, coluna)) return;
+        if(!ehPosicaoValida(linha, coluna)) return;
+        boolean[][] posicoesDisponiveis = getPosicoesVazias();
+        if(posicoesDisponiveis[linha][coluna]) {
+            System.out.println("Nenhum número nessa posição!");
+            return;
+        }
+        List<Integer[]> fixos = getNumerosFixos();
+
         getPositions()[linha][coluna] = null;
     }
 
     private boolean ehPosicaoValida(int linha, int coluna) {
         if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
             System.out.println("Posição inválida!");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private boolean ehNumeroValido(int numero) {
-        if(numero >= 0 && numero <= 9) {
+        if(numero < 0 || numero > 9) {
             System.out.println("Número inválido!");
             return false;
         }

@@ -37,6 +37,7 @@ public abstract class Tabuleiro {
         return positions;
     }
 
-
-
+    public List<Integer[]> getNumerosFixos() {
+        return numerosFixos;
+    }
 }
