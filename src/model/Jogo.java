@@ -42,14 +42,17 @@ public class Jogo extends Tabuleiro{
         getPositions()[linha][coluna] = numero;
     }
 
-    public void retirarNumero(int linha, int coluna) {
+    public void removerNumero(int linha, int coluna) {
         if(!ehPosicaoValida(linha, coluna)) return;
         boolean[][] posicoesDisponiveis = getPosicoesVazias();
         if(posicoesDisponiveis[linha][coluna]) {
             System.out.println("Nenhum número nessa posição!");
             return;
         }
-        List<Integer[]> fixos = getNumerosFixos();
+        if(ehNumeroFixo(linha, coluna)) {
+            System.out.println("Número fixo não pode ser removido!");
+            return;
+        }
 
         getPositions()[linha][coluna] = null;
     }
@@ -68,6 +71,14 @@ public class Jogo extends Tabuleiro{
             return false;
         }
         return true;
+    }
+
+    private boolean ehNumeroFixo(int linha, int coluna) {
+        for(Integer[] position : getNumerosFixos()) {
+            if(position[0] == linha && position[1] == coluna)
+                return true;
+        }
+        return false;
     }
 
 }

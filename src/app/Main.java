@@ -11,12 +11,13 @@ public class Main {
         UI.start();
 
         Jogo sudoku = new Jogo(args);
-        sudoku.retirarNumero(0,0);
+        sudoku.removerNumero(0,8);
         sudoku.colocarNumero(0, 0, 9);
         sudoku.colocarNumero(0, 1, 7);
         UI.mostrarJogo(sudoku);
 
         ValidadorJogo validador = new ValidadorJogo();
+
 
         for(int i = 0; i < 9; i++) {
             for(int j = 0; j < 9; j++) {
