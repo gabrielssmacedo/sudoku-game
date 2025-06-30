@@ -1,17 +1,20 @@
 package model;
 
 import model.enums.StatusJogo;
+import utils.UI;
 import utils.ValidadorJogo;
-
-import java.util.List;
 
 public class Jogo extends Tabuleiro{
 
     private StatusJogo statusJogo;
     private boolean statusErro;
 
-    public Jogo(String[] args) {
+    public Jogo() {
         super();
+        this.statusJogo = StatusJogo.NAO_INICIADO;
+    }
+
+    public void iniciarNovoJogo(String[] args) {
         for(String a : args) {
             int linha = Integer.parseInt(String.valueOf(a.charAt(2)));
             int coluna = Integer.parseInt(String.valueOf(a.charAt(0)));
@@ -23,7 +26,6 @@ public class Jogo extends Tabuleiro{
             indexes[2] = numero;
             numerosFixos.add(indexes);
         }
-        this.statusJogo = StatusJogo.NAO_INICIADO;
     }
 
     public StatusJogo getStatusJogo() {
@@ -55,33 +57,42 @@ public class Jogo extends Tabuleiro{
     }
 
     public void colocarNumero(int linha, int coluna, int numero) {
+        ValidadorJogo validador = new ValidadorJogo();
+
         if(!ehPosicaoValida(linha, coluna)) return;
         if(!ehNumeroValido(numero)) return;
         boolean[][] posicoesDisponiveis = getPosicoesVazias();
         if(!posicoesDisponiveis[linha][coluna]) {
-            System.out.println("Posição já ocupada!");
+            System.out.println("\nPosição já ocupada!\n");
             return;
         }
         getPositions()[linha][coluna] = numero;
+
+        validador.atualizaStatusJogo(this);
     }
 
     public void removerNumero(int linha, int coluna) {
+        ValidadorJogo validador = new ValidadorJogo();
+
         if(!ehPosicaoValida(linha, coluna)) return;
         boolean[][] posicoesDisponiveis = getPosicoesVazias();
         if(posicoesDisponiveis[linha][coluna]) {
-            System.out.println("Nenhum número nessa posição!");
+            System.out.println("\nNenhum número nessa posição!\n");
             return;
         }
         if(ehNumeroFixo(linha, coluna)) {
-            System.out.println("Número fixo não pode ser removido!");
+            System.out.println("\nNúmero fixo não pode ser removido!\n");
             return;
         }
 
         getPositions()[linha][coluna] = null;
+
+        validador.atualizaStatusJogo(this);
     }
 
     public void limparTabuleiro(){
         int len = getPositions().length;
+        ValidadorJogo validador = new ValidadorJogo();
 
         Integer[][] positions = getPositions();
         for(int i = 0; i < len; i++) {
@@ -97,27 +108,21 @@ public class Jogo extends Tabuleiro{
             positions[linha][coluna] = numeroFixo;
         }
 
+        validador.atualizaStatusJogo(this);
+
     }
 
     public boolean finalizarJogo() {
         ValidadorJogo validador = new ValidadorJogo();
-        int len = getPositions().length;
         if(!getStatusJogo().equals(StatusJogo.COMPLETO)) return false;
         if(isStatusErro()) return false;
 
-        for(int i = 0; i < len; i++) {
-            for(int j = 0; j < len; j++) {
-                if(!validador.validarNumeroNaPosicao(i, j, getPositions()))
-                    return false;
-            }
-        }
-
-        return true;
+        return validador.validaTodasPosicoes(this);
     }
 
     private boolean ehPosicaoValida(int linha, int coluna) {
         if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
-            System.out.println("Posição inválida!");
+            System.out.println("\nPosição inválida!\n");
             return false;
         }
         return true;
@@ -125,7 +130,7 @@ public class Jogo extends Tabuleiro{
 
     private boolean ehNumeroValido(int numero) {
         if(numero < 0 || numero > 9) {
-            System.out.println("Número inválido!");
+            System.out.println("\nNúmero inválido!\n");
             return false;
         }
         return true;
