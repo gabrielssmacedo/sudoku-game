@@ -59,8 +59,8 @@ public class Jogo extends Tabuleiro{
     public void colocarNumero(int linha, int coluna, int numero) {
         ValidadorJogo validador = new ValidadorJogo();
 
-        if(!ehPosicaoValida(linha, coluna)) return;
-        if(!ehNumeroValido(numero)) return;
+        if(!validador.ehPosicaoValida(linha, coluna, TAMANHO)) return;
+        if(!validador.ehNumeroValido(numero)) return;
         boolean[][] posicoesDisponiveis = getPosicoesVazias();
         if(!posicoesDisponiveis[linha][coluna]) {
             System.out.println("\nPosição já ocupada!\n");
@@ -74,13 +74,13 @@ public class Jogo extends Tabuleiro{
     public void removerNumero(int linha, int coluna) {
         ValidadorJogo validador = new ValidadorJogo();
 
-        if(!ehPosicaoValida(linha, coluna)) return;
+        if(!validador.ehPosicaoValida(linha, coluna, TAMANHO)) return;
         boolean[][] posicoesDisponiveis = getPosicoesVazias();
         if(posicoesDisponiveis[linha][coluna]) {
             System.out.println("\nNenhum número nessa posição!\n");
             return;
         }
-        if(ehNumeroFixo(linha, coluna)) {
+        if(validador.ehNumeroFixo(linha, coluna, getNumerosFixos())) {
             System.out.println("\nNúmero fixo não pode ser removido!\n");
             return;
         }
@@ -119,30 +119,4 @@ public class Jogo extends Tabuleiro{
 
         return validador.validaTodasPosicoes(this);
     }
-
-    private boolean ehPosicaoValida(int linha, int coluna) {
-        if(linha < 0 || linha > TAMANHO-1 || coluna < 0 || coluna > TAMANHO-1){
-            System.out.println("\nPosição inválida!\n");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean ehNumeroValido(int numero) {
-        if(numero < 0 || numero > 9) {
-            System.out.println("\nNúmero inválido!\n");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean ehNumeroFixo(int linha, int coluna) {
-        for(Integer[] position : getNumerosFixos()) {
-            if(position[0] == linha && position[1] == coluna)
-                return true;
-        }
-        return false;
-    }
-
-
 }

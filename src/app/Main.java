@@ -67,11 +67,7 @@ public class Main {
                 }
                 case 5 -> {
                     System.out.print("\nStatus do jogo: ");
-                    switch (sudoku.getStatusJogo()) {
-                        case NAO_INICIADO -> System.out.println("não iniciado");
-                        case INCOMPLETO -> System.out.println("incompleto");
-                        case COMPLETO -> System.out.println("completo");
-                    }
+                    System.out.println(sudoku.getStatusJogo().getLabel());
                     System.out.printf("Status de erro: %s\n\n", sudoku.isStatusErro() ? "com erro" : "sem erro");
                 }
                 case 6 -> {
@@ -118,11 +114,5 @@ public class Main {
         }
 
         return resposta;
-    }
-
-    public static void executaOpcao(int resposta, Jogo sudoku) {
-        switch (resposta) {
-
-        }
     }
 }

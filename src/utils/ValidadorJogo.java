@@ -4,6 +4,7 @@ import model.Jogo;
 import model.enums.StatusJogo;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ValidadorJogo {
 
@@ -57,4 +58,27 @@ public class ValidadorJogo {
         return true;
     }
 
+    public boolean ehPosicaoValida(int linha, int coluna, final int tamanho) {
+        if(linha < 0 || linha > tamanho-1 || coluna < 0 || coluna > tamanho-1){
+            System.out.println("\nPosição inválida!\n");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean ehNumeroValido(int numero) {
+        if(numero < 0 || numero > 9) {
+            System.out.println("\nNúmero inválido!\n");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean ehNumeroFixo(int linha, int coluna, List<Integer[]> numerosFixos) {
+        for(Integer[] position : numerosFixos) {
+            if(position[0] == linha && position[1] == coluna)
+                return true;
+        }
+        return false;
+    }
 }
